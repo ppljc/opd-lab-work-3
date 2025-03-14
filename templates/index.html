@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Конвертер валют</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Конвертер валют</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="amount">Сумма:</label>
+                <input type="number" step="0.01" name="amount" id="amount" required value="{{ amount if amount else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="from_currency">Из валюты:</label>
+                <select name="from_currency" id="from_currency" required>
+                    {% for currency in currencies %}
+                        <option value="{{ currency }}" {% if currency == from_currency %}selected{% endif %}>
+                            {{ currency }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="to_currency">В валюту:</label>
+                <select name="to_currency" id="to_currency" required>
+                    {% for currency in currencies %}
+                        <option value="{{ currency }}" {% if currency == to_currency %}selected{% endif %}>
+                            {{ currency }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit">Конвертировать</button>
+        </form>
+
+        {% if result is defined %}
+            <div class="result">
+                <h3>Результат: {{ result }} {{ to_currency }}</h3>
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="error">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
