@@ -28,7 +28,7 @@ def index():
         error = "Не удалось загрузить курсы валют. Попробуйте позже."
         return render_template("index.html", error=error)
 
-    currencies = list(rates.keys())  # Список доступных валют
+    currencies = list(rates.keys())
 
     if request.method == "POST":
         try:
@@ -36,7 +36,6 @@ def index():
             from_currency = request.form["from_currency"]
             to_currency = request.form["to_currency"]
 
-            # Конвертация
             if from_currency != "USD":
                 amount_in_usd = amount / rates[from_currency]
             else:
